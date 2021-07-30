@@ -1,0 +1,1 @@
+<view class="contact"><image class="img" src="http://www.itcast.cn/2018czydz/images/gywmban.jpg"></image><view class="info"><view data-event-opts="{{[['tap',[['phone',['$event']]]]]}}" bindtap="__e">联系电话：400-123-123（点击拨打）</view><view>联系地址：江苏省南通市崇川区人民中路89南通职业大学</view></view><map class="map" longitude="{{longitude}}" latitude="{{latitude}}" markers="{{markers}}"></map></view>
