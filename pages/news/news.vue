@@ -5,7 +5,7 @@
 </template>
 
 <script>
-	import newsItem from '../../components/news-item.vue'
+	import newsItem from '../../components/news-item/news-item.vue'
 	export default {
 		data() {
 			return {
@@ -31,41 +31,41 @@
 						"click": 25
 					},
 					{
-						"id": 3,
+						"id": 4,
 						"img_url": '/static/icon/logo.png',
 						"add_time": 'Thu Sep 17 02:39:05 UTC 2015',
 						"title": '我们不会收集用户个人隐私信息，只会收集一些简单的产品交互行为',
 						"click": 25
 					},
 					{
-						"id": 3,
+						"id": 5,
 						"img_url": '/static/icon/logo.png',
 						"add_time": 'Thu Sep 17 02:39:05 UTC 2015',
 						"title": '我们不会收集用户个人隐私信息，只会收集一些简单的产品交互行为',
 						"click": 25
 					},
 					{
-						"id": 3,
+						"id": 6,
 						"img_url": '/static/icon/logo.png',
 						"add_time": 'Thu Sep 17 02:39:05 UTC 2015',
 						"title": '我们不会收集用户个人隐私信息，只会收集一些简单的产品交互行为',
 						"click": 25
 					},
 					{
-						"id": 3,
+						"id": 7,
 						"img_url": '/static/icon/logo.png',
 						"add_time": 'Thu Sep 17 02:39:05 UTC 2015',
 						"title": '我们不会收集用户个人隐私信息，只会收集一些简单的产品交互行为',
 						"click": 25
 					},
 					{
-						"id": 3,
+						"id": 8,
 						"img_url": '/static/icon/logo.png',
 						"add_time": 'Thu Sep 17 02:39:05 UTC 2015',
 						"title": '我们不会收集用户个人隐私信息，只会收集一些简单的产品交互行为',
 						"click": 25
 					}
-					
+
 				]
 			}
 		},

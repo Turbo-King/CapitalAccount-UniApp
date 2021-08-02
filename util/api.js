@@ -15,7 +15,7 @@ export const myRequest = (options) => {
 			},
 			fail: (err) => {
 				uni.showToast({
-					title: "请求接口失败"
+					title: "网络异常,请稍后重试！"
 				})
 				reject(err)
 

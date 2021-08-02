@@ -1,4 +1,12 @@
 {
+	// uview依赖
+	"easycom": {
+		// 下载安装的方式需要前面的"@/"，npm安装的方式无需"@/"
+		// 下载安装方式
+		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+		// npm安装方式
+		// "^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
+	},
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 
 		{
@@ -37,7 +45,8 @@
 		}, {
 			"path": "pages/transactionRecord/transactionRecord",
 			"style": {
-				"enablePullDownRefresh": true
+				"enablePullDownRefresh": false,
+				"navigationBarTitleText": "交易记录"
 			}
 
 		}, {
@@ -51,6 +60,13 @@
 			"style": {
 				"enablePullDownRefresh": false,
 				"navigationBarTitleText": "资讯详情"
+			}
+
+		}, {
+			"path": "pages/personalDetails/personalDetails",
+			"style": {
+				"navigationBarTitleText": "个人信息",
+				"enablePullDownRefresh": false
 			}
 
 		}

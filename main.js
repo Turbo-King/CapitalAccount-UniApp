@@ -4,6 +4,10 @@ import {
 	myRequest
 } from './util/api.js'
 
+// 引入uview依赖
+import uView from "uview-ui";
+Vue.use(uView);
+
 //封装请求
 Vue.config.productionTip = false
 

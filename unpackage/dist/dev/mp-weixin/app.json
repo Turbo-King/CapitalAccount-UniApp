@@ -7,7 +7,8 @@
     "pages/business/business",
     "pages/transactionRecord/transactionRecord",
     "pages/contact/contact",
-    "pages/news-detail/news-detail"
+    "pages/news-detail/news-detail",
+    "pages/personalDetails/personalDetails"
   ],
   "subPackages": [],
   "window": {

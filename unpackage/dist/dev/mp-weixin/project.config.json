@@ -4,11 +4,12 @@
     "ignore": []
   },
   "setting": {
-    "urlCheck": false
+    "urlCheck": false,
+    "minified": true
   },
   "compileType": "miniprogram",
   "libVersion": "",
-  "appid": "touristappid",
+  "appid": "wxdd9ad80ea6f13899",
   "projectname": "CapitalAccount-UniApp",
   "condition": {
     "search": {
