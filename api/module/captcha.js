@@ -1,4 +1,4 @@
-import request from '../../util/api.js';
+import request from '../request.js';
 
 // 接口
 const Api = {
