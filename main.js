@@ -1,8 +1,5 @@
-import Vue from 'vue'
-import App from './App'
-import {
-	myRequest
-} from './util/api.js'
+import Vue from 'vue';
+import App from './App';
 
 // 引入uview依赖
 import uView from "uview-ui";
@@ -10,8 +7,6 @@ Vue.use(uView);
 
 //封装请求
 Vue.config.productionTip = false
-
-Vue.prototype.$myRequest = myRequest
 
 // 时间格式化
 Vue.filter('formatDate', (date) => {
