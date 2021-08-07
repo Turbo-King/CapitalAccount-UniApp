@@ -1,2 +1,1 @@
-<!--pages/transactionRecord/transactionRecord.wxml-->
-<text>pages/transactionRecord/transactionRecord.wxml</text>
+<view>交易记录</view>

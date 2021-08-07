@@ -21,8 +21,8 @@
 					longitude: 120.900258,
 					latitude: 32.014023,
 					iconPath: '/static/icon/logo.png',
-					width: 50,
-					height: 50
+					width: 60,
+					height: 60
 
 				}],
 

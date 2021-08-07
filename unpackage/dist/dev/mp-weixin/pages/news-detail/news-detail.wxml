@@ -1,2 +1,1 @@
-<!--pages/news-detail/news-detail.wxml-->
-<text>pages/news-detail/news-detail.wxml</text>
+<view class="news-detail"><text class="title">标题</text><view class="info"><text>发表时间：</text><text>浏览人数：</text></view><view class="content">内容</view></view>
