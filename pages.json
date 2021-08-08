@@ -21,7 +21,7 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": true
 			}
 		},
 		{

@@ -356,10 +356,12 @@
 	.verification-code {
 		width: 50%;
 		display: inline-block;
+		margin-top: 25px;
+		float: right;
 
 		image {
 			width: 100%;
-			margin-left: 25px;
+			// margin-left: 25px;
 			border-radius: 20px;
 		}
 	}

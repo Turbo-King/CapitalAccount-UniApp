@@ -5,8 +5,15 @@ import App from './App';
 import uView from "uview-ui";
 Vue.use(uView);
 
+// 引入API请求
+import {
+	myRequest
+} from './util/api.js'
+
 //封装请求
 Vue.config.productionTip = false
+
+Vue.prototype.$myRequest = myRequest
 
 // 时间格式化
 Vue.filter('formatDate', (date) => {

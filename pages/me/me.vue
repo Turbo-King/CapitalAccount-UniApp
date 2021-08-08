@@ -1,15 +1,15 @@
 <template>
 	<view>
-
-		<!-- 照相机 -->
-		<!-- <u-navbar :is-back="false" title="　" :border-bottom="false">
-			<view class="u-flex u-row-right" style="width: 100%;">
-				<view class="camera u-flex u-row-center">
-					<u-icon name="camera-fill" color="#000000" size="48"></u-icon>
-				</view>
-			</view>
-		</u-navbar> -->
-
+		<!-- 消息提示 -->
+		<view class="u-demo-area">
+			<u-toast :type="type" ref="uToast"></u-toast>
+			<text class="no-mode-here"></text>
+		</view>
+		<!-- 弹窗提示 -->
+		<u-modal ref="uModal" v-model="tipShow" :show-cancel-button="true" :show-title="showTitle" @confirm="confirm"
+			:content="content">
+		</u-modal>
+		<!-- 个人信息 -->
 		<view class="u-flex user-box u-p-l-30 u-p-r-20 u-p-b-30">
 			<view class="u-m-r-10">
 				<u-avatar :src="pic" size="140"></u-avatar>
@@ -47,7 +47,18 @@
 		data() {
 			return {
 				pic: 'https://uviewui.com/common/logo.png',
-				show: true
+
+				// 消息提示
+				type: 'success',
+				title: '推出成功',
+				icon: true,
+				position: 'center',
+
+				// 弹窗显示
+				tipShow: false,
+				content: '确定推出登陆么？',
+				contentSlot: true,
+				showTitle: true,
 			}
 		},
 		onLoad() {
@@ -65,11 +76,33 @@
 			},
 			// 切换账号
 			logout() {
+				this.tipShow = true
+			},
+
+			// 消息提示
+			show() {
+				this.$refs.uToast.show({
+					title: this.title,
+					position: this.position,
+					type: this.type,
+					icon: this.icon,
+				});
+			},
+			hide() {
+				this.$refs.uToast.hide();
+			},
+
+			// 弹出提示
+			confirm() {
+				setTimeout(() => {
+					this.show = false;
+				}, 1000)
+				this.show()
 				setTimeout(() => {
 					uni.navigateTo({
 						url: '../login/login'
 					})
-				}, 300)
+				}, 1000)
 			}
 
 		}

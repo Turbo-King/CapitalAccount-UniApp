@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "u-toast": "/uview-ui/components/u-toast/u-toast"
+  },
   "component": true
 }

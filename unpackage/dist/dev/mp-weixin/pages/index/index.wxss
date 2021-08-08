@@ -25,6 +25,10 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+.no-mode-here {
+  color: #909399;
+  font-size: 28rpx;
+}
 .home swiper {
   width: 750rpx;
   height: 380rpx;

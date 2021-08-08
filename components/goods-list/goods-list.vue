@@ -1,12 +1,19 @@
 <template>
-	<view class="goods_list">
-		<view class="goods_item" v-for="item in goods" :key="item.id">
-			<image :src="item.img_url"></image>
-			<view class="goods_name">
-				{{item.title}}
-			</view>
-			<view class="time">
-				<text>{{item.add_time | formatDate}}</text>
+	<view>
+		<!-- 消息提示 -->
+		<view class="u-demo-area">
+			<u-toast :type="type" ref="uToast"></u-toast>
+			<text class="no-mode-here"></text>
+		</view>
+		<view class="goods_list">
+			<view class="goods_item" v-for="item in goods" :key="item.id" @click="newsDetail()">
+				<image :src="item.image"></image>
+				<view class="goods_name">
+					{{item.title}}
+				</view>
+				<view class="time">
+					<text>{{item.passtime | formatDate}}</text>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -14,11 +21,46 @@
 
 <script>
 	export default {
-		props: ['goods']
+		props: ['goods'],
+		data() {
+			return {
+				// 消息提示
+				type: 'warning',
+				title: '该内容不可点击哦！',
+				icon: false,
+				position: 'center',
+			}
+		},
+
+		methods: {
+			// 点击新闻详情
+			newsDetail() {
+				this.show()
+			},
+
+			// 消息提示
+			show() {
+				this.$refs.uToast.show({
+					title: this.title,
+					position: this.position,
+					type: this.type,
+					icon: this.icon,
+				});
+			},
+			hide() {
+				this.$refs.uToast.hide();
+			}
+		}
 	}
 </script>
 
 <style lang="scss">
+	// 消息提示
+	.no-mode-here {
+		color: $u-tips-color;
+		font-size: 28rpx;
+	}
+
 	.goods_list {
 		padding: 0 15rpx;
 		display: flex;

@@ -1,5 +1,11 @@
 <template>
 	<view class="home">
+		<!-- 消息提示 -->
+		<view class="u-demo-area">
+			<u-toast :type="type" ref="uToast"></u-toast>
+			<text class="no-mode-here"></text>
+		</view>
+		<!-- 轮播图 -->
 		<swiper indicator-dots circular>
 			<swiper-item v-for="item in swipers" :key="item.id">
 				<image :src="item.img_url"></image>
@@ -34,78 +40,23 @@
 	export default {
 		data() {
 			return {
-				news: [{
-						"id": 1,
-						"img_url": '/static/icon/logo.png',
-						"add_time": 'Thu Sep 17 02:39:05 UTC 2015',
-						"title": '我们不会收集用户个人隐私信息',
-						"click": 5
-					},
-					{
-						"id": 2,
-						"img_url": '/static/icon/logo.png',
-						"add_time": 'Thu Sep 17 02:39:05 UTC 2015',
-						"title": '我们不会收集用户个人隐私信息',
-						"click": 15
-					},
-					{
-						"id": 3,
-						"img_url": '/static/icon/logo.png',
-						"add_time": 'Thu Sep 17 02:39:05 UTC 2015',
-						"title": '我们不会收集用户个人隐私信息',
-						"click": 25
-					},
-					{
-						"id": 4,
-						"img_url": '/static/icon/logo.png',
-						"add_time": 'Thu Sep 17 02:39:05 UTC 2015',
-						"title": '我们不会收集用户个人隐私信息',
-						"click": 25
-					},
-					{
-						"id": 5,
-						"img_url": '/static/icon/logo.png',
-						"add_time": 'Thu Sep 17 02:39:05 UTC 2015',
-						"title": '我们不会收集用户个人隐私信息',
-						"click": 25
-					},
-					{
-						"id": 6,
-						"img_url": '/static/icon/logo.png',
-						"add_time": 'Thu Sep 17 02:39:05 UTC 2015',
-						"title": '我们不会收集用户个人隐私信息',
-						"click": 25
-					},
-					{
-						"id": 7,
-						"img_url": '/static/icon/logo.png',
-						"add_time": 'Thu Sep 17 02:39:05 UTC 2015',
-						"title": '我们不会收集用户个人隐私信息',
-						"click": 25
-					},
-					{
-						"id": 8,
-						"img_url": '/static/icon/logo.png',
-						"add_time": 'Thu Sep 17 02:39:05 UTC 2015',
-						"title": '我们不会收集用户个人隐私信息',
-						"click": 25
-					}
-				],
+				pageInde: 1,
+				news: [],
 				swipers: [{
 						"id": 1,
-						"img_url": '/static/icon/swiper1.png',
+						"img_url": '/static/icon/swiper1.jpg',
 					},
 					{
 						"id": 2,
-						"img_url": '/static/icon/swiper2.png',
+						"img_url": '/static/icon/swiper2.jpg',
 					},
 					{
 						"id": 3,
-						"img_url": '/static/icon/swiper3.png',
+						"img_url": '/static/icon/swiper3.jpg',
 					},
 					{
 						"id": 4,
-						"img_url": '/static/icon/swiper4.png',
+						"img_url": '/static/icon/swiper4.jpg',
 					}
 				],
 
@@ -125,13 +76,21 @@
 					icon: '/static/icon/lianxiwomen.png',
 					title: '联系我们',
 					path: '/pages/contact/contact'
-				}]
+				}],
+
+				// 消息提示
+				type: 'success',
+				title: '成功',
+				icon: true,
+				position: 'center',
 			}
 		},
 		onLoad() {
 			//获取轮播图数据
 			// this.getSwipers()
 
+			//获取热门新闻
+			this.getNews()
 		},
 
 		components: {
@@ -147,6 +106,35 @@
 			// 	this.swipers = res.data.message
 			// },
 
+			// 获取热门新闻
+			async getNews(callBack) {
+				const res = await this.$myRequest({
+					url: 'https://api.apiopen.top/getWangYiNews?page=' + this.pageInde
+				})
+				// console.log(res)
+				this.news = [...this.news, ...res.data.result]
+				callBack && callBack()
+			},
+
+			//滚动条触底触发事件
+			onReachBottom() {
+				// console.log('触底了')
+				this.pageIndex++
+				this.getNews()
+			},
+
+			//监听下拉刷新事件
+			onPullDownRefresh() {
+				// console.log('下拉刷新了')
+				this.pageIndex = 1
+				this.news = []
+				setTimeout(() => {
+					this.getNews(() => {
+						uni.stopPullDownRefresh()
+					})
+				}, 1000)
+			},
+
 			//导航点击处理跳转
 			navItemClick(url, title) {
 				// console.log('跳转', url)
@@ -159,6 +147,19 @@
 						url: url
 					})
 				}
+			},
+
+			// 消息提示
+			show() {
+				this.$refs.uToast.show({
+					title: this.title,
+					position: this.position,
+					type: this.type,
+					icon: this.icon,
+				});
+			},
+			hide() {
+				this.$refs.uToast.hide();
 			}
 
 		}
@@ -166,6 +167,12 @@
 </script>
 
 <style lang="scss">
+	// 消息提示
+	.no-mode-here {
+		color: $u-tips-color;
+		font-size: 28rpx;
+	}
+
 	.home {
 		swiper {
 			width: 750rpx;
