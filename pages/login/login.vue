@@ -6,14 +6,14 @@
 				<u-top-tips ref="uTips"></u-top-tips>
 			</view>
 		</view>
-		
+
 		<view class="avatorWrapper">
 			<view class="avator">
 				<image class="img" src="/static/icon/logo.png" mode="widthFix"></image>
 				<text class="text">南通职业大学金融</text>
 			</view>
 		</view>
-		
+
 		<view class="form">
 			<view class="inputWrapper">
 				<input @input="record" id="username" class="input" type="text" placeholder="请输入用户名"
@@ -23,12 +23,12 @@
 				<input @input="record" id="password" class="input" type="password" placeholder="请输入密码"
 					v-model="this.password" />
 			</view>
-			<view class="image-content">
-				<image :src="captchaImage" @click="refreshCaptcha" mode="widthFix"></image>
-			</view>
-			<view class="inputWrapper">
+			<view class="verification-input">
 				<input @input="record" id="captchaCode" class="input" type="text" placeholder="请输入验证码"
 					v-model="this.captchaCode" />
+			</view>
+			<view class="verification-code">
+				<image :src="captchaImage" @click="refreshCaptcha" mode="widthFix"></image>
 			</view>
 			<button class="loginBtn" @click="login" :class="{loginActive:loginFlag}">
 				<text class="btnValue">登录</text>
@@ -38,7 +38,7 @@
 				<text class="forgetPassword" :class="{active:forgetPasswordFlag}" @click="clickChange(2)">找回密码</text>
 			</view>
 		</view>
-		
+
 	</view>
 </template>
 
@@ -57,7 +57,7 @@
 				duration: 2000,
 				title: '请检查输入是否正确',
 				type: 'warning',
-				
+
 				username: 'admin',
 				password: 'admin',
 				captchaKey: 'key',
@@ -217,7 +217,7 @@
 					// })
 					// console.log(res)
 				}, 300);
-				
+
 				if (this.username == '') {
 					uni.showToast({
 						title: '请输入用户名',
@@ -315,7 +315,7 @@
 
 	.form {
 		padding: 0 100upx;
-		margin-top: 80px;
+		margin-top: 50px;
 	}
 
 	.inputWrapper {
@@ -335,17 +335,32 @@
 		}
 	}
 
-	.image-content {
-		font-size: 0;
-		width: 100%;
+	.verification-input {
+		width: 40%;
 		height: 80upx;
-		margin-top: 10px;
-		text-align: center;
-		vertical-align: middle;
+		background: white;
+		border-radius: 20px;
+		box-sizing: border-box;
+		margin-top: 25px;
+		display: inline-block;
 
-		image: {
-			height: 10upx;
-			display: inline-block;
+		.input {
+			width: 100%;
+			height: 100%;
+			text-align: center;
+			font-size: 14px;
+			font-weight: 14px;
+		}
+	}
+
+	.verification-code {
+		width: 50%;
+		display: inline-block;
+
+		image {
+			width: 100%;
+			margin-left: 25px;
+			border-radius: 20px;
 		}
 	}
 
