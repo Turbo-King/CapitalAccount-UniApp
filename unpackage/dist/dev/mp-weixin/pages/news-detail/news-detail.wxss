@@ -32,6 +32,8 @@
 .news-detail .title {
   text-align: center;
   width: 710rpx;
+  font-size: 20px;
+  font-weight: 20px;
   display: block;
   margin: 20rpx 0;
 }
@@ -42,5 +44,13 @@
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
           justify-content: space-between;
+}
+.news-detail .content {
+  margin-top: 20px;
+}
+.news-detail .content image {
+  width: 100%;
+  height: 250px;
+  margin-bottom: 20px;
 }
 

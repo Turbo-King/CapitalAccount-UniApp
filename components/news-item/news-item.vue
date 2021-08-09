@@ -1,14 +1,14 @@
 <template>
 	<view>
 		<view class="news_item" @click="newsDetail(item.id)" v-for='item in list' :key='item.id'>
-			<image :src="item.img_url"></image>
+			<image :src="item.img"></image>
 			<view class="right">
 				<view class="tit">
 					{{item.title}}
 				</view>
 				<view class="info">
-					<text>发表时间：{{item.add_time | formatDate}}</text>
-					<text>浏览人数：{{item.click}}</text>
+					<text>浏览人数：{{item.browseNum}}</text>
+					<text>发表时间：{{item.createTime}}</text>
 				</view>
 			</view>
 		</view>
@@ -61,10 +61,15 @@
 			}
 
 			.info {
-				font-size: 24rpx;
+				font-size: 20rpx;
+				float: right;
 
 				text:nth-child(2) {
-					margin-left: 50rpx;
+					// margin-left: 50rpx;
+				}
+
+				text:nth-child(1) {
+					display: block
 				}
 			}
 		}

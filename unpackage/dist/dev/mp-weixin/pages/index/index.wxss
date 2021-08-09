@@ -25,6 +25,22 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+/* 回到顶部 */
+.top {
+  position: relative;
+  display: none;
+  /* 先将元素隐藏 */
+}
+.topc {
+  position: fixed;
+  width: 40px;
+  height: 100px;
+  z-index: 10;
+  right: 12px;
+  top: 80%;
+  height: 50px;
+  line-height: 50px;
+}
 .no-mode-here {
   color: #909399;
   font-size: 28rpx;

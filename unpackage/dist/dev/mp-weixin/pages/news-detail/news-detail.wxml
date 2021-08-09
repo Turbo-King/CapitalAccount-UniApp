@@ -1,1 +1,1 @@
-<view class="news-detail"><text class="title">标题</text><view class="info"><text>发表时间：</text><text>浏览人数：</text></view><view class="content">内容</view></view>
+<view class="news-detail"><text class="title">{{detail.title}}</text><view class="info"><text>{{"发表时间："+detail.createTime}}</text><text>{{"浏览人数："+detail.browseNum}}</text></view><view class="content"><image src="{{detail.img}}"></image><rich-text class="richText" nodes="{{detail.content}}"></rich-text></view></view>

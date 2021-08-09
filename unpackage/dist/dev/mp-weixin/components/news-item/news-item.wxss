@@ -54,9 +54,10 @@
   font-size: 30rpx;
 }
 .news_item .right .info {
-  font-size: 24rpx;
+  font-size: 20rpx;
+  float: right;
 }
-.news_item .right .info text:nth-child(2) {
-  margin-left: 50rpx;
+.news_item .right .info text:nth-child(1) {
+  display: block;
 }
 

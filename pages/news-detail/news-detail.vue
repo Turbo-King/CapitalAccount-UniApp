@@ -1,13 +1,13 @@
 <template>
 	<view class="news-detail">
-		<text class="title">标题</text>
+		<text class="title">{{detail.title}}</text>
 		<view class="info">
-			<text>发表时间：</text>
-			<text>浏览人数：</text>
+			<text>发表时间：{{detail.createTime}}</text>
+			<text>浏览人数：{{detail.browseNum}}</text>
 		</view>
 		<view class="content">
-			内容
-			<!-- <rich-text :nodes="detail.content"></rich-text> -->
+			<image :src="detail.img"></image>
+			<rich-text class="richText" :nodes="detail.content"></rich-text>
 		</view>
 	</view>
 </template>
@@ -25,13 +25,15 @@
 			//获取资讯详情
 			async getNewDetail() {
 				const res = await this.$myRequest({
-					url: '' + this.id
+					url: 'http://localhost:8081/api/capital/news/details?id=' + this.id
 				})
+				// console.log(res)
+				this.detail = res.data.data
 			}
 		},
 
 		onLoad(option) {
-			console.log(option)
+			// console.log(option)
 			this.id = option.id
 			this.getNewDetail()
 		}
@@ -46,6 +48,8 @@
 		.title {
 			text-align: center;
 			width: 710rpx;
+			font-size: 20px;
+			font-weight:20px;
 			display: block;
 			margin: 20rpx 0;
 		}
@@ -53,6 +57,22 @@
 		.info {
 			display: flex;
 			justify-content: space-between;
+		}
+		
+		.content{
+			margin-top: 20px;
+			// width: 750rpx;
+			
+			
+			image{
+				width: 100%;
+				height: 250px;
+				margin-bottom: 20px;
+			}
+			
+			richText{
+				
+			}
 		}
 	}
 </style>

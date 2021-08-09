@@ -51,7 +51,7 @@
 				// 消息提示
 				type: 'success',
 				title: '推出成功',
-				icon: true,
+				icon: false,
 				position: 'center',
 
 				// 弹窗显示

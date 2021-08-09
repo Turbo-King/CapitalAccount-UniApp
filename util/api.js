@@ -24,3 +24,6 @@ export const myRequest = (options) => {
 		})
 	})
 }
+// export default {
+// 	myRequest
+// }

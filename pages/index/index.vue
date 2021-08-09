@@ -22,6 +22,11 @@
 			</view>
 		</view>
 
+		<!-- 页面回到顶部 -->
+		<view class="top" :style="{'display':(topState===true? 'block':'none')}">
+			<image :src="topIcon" class="topc" @click="top"></image>
+		</view>
+
 		<!-- 热门新闻区 -->
 		<view class="hot_news">
 			<view class="tit">热门新闻</view>
@@ -40,6 +45,8 @@
 	export default {
 		data() {
 			return {
+				topState: false,
+				topIcon: '/static/icon/top.png',
 				pageInde: 1,
 				news: [],
 				swipers: [{
@@ -93,8 +100,18 @@
 			this.getNews()
 		},
 
+		//导入组件 
 		components: {
 			'goods-list': goodsList
+		},
+
+		//检测页面位置
+		onPageScroll(e) { //根据距离顶部距离是否显示回到顶部按钮
+			if (e.scrollTop > 600) { //当距离大于600时显示回到顶部按钮
+				this.topState = true
+			} else { //当距离小于600时显示回到顶部按钮
+				this.topState = false
+			}
 		},
 
 		methods: {
@@ -119,14 +136,14 @@
 			//滚动条触底触发事件
 			onReachBottom() {
 				// console.log('触底了')
-				this.pageIndex++
+				this.pageInde++
 				this.getNews()
 			},
 
 			//监听下拉刷新事件
 			onPullDownRefresh() {
 				// console.log('下拉刷新了')
-				this.pageIndex = 1
+				this.pageInde = 1
 				this.news = []
 				setTimeout(() => {
 					this.getNews(() => {
@@ -160,6 +177,14 @@
 			},
 			hide() {
 				this.$refs.uToast.hide();
+			},
+
+			// 页面回到顶部
+			top() { //回到顶部  
+				uni.pageScrollTo({
+					scrollTop: 0,
+					duration: 300
+				});
 			}
 
 		}
@@ -167,6 +192,24 @@
 </script>
 
 <style lang="scss">
+	/* 回到顶部 */
+	.top {
+		position: relative;
+		display: none;
+		/* 先将元素隐藏 */
+	}
+
+	.topc {
+		position: fixed;
+		width: 40px;
+		height: 100px;
+		z-index: 10;
+		right: 12px;
+		top: 80%;
+		height: 50px;
+		line-height: 50px;
+	}
+
 	// 消息提示
 	.no-mode-here {
 		color: $u-tips-color;
