@@ -2,7 +2,7 @@ import request from '../request.js';
 
 // 接口
 const Api = {
-	create: '/api/captcha/create'
+	create: '/system/captcha/generate'
 }
 
 // 创建

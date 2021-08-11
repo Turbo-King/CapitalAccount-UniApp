@@ -2,18 +2,16 @@ import request from '../request.js'
 
 // 接口
 const Api = {
-	login: '/api/login',
-	logout: '/api/logout'
+	login: '/login',
+	logout: '/logout'
 }
 
 // 登录
 const login = (data) => {
+	// console.log(data)
 	return request.request({
-		url: Api.login +
-			'?username=' + data.username +
-			'&password=' + data.password +
-			'&captchaKey=' + data.captchaKey +
-			'&captchaCode=' + data.captchaCode,
+		url: Api.login ,
+		data:data,
 		method: 'POST'
 	})
 }

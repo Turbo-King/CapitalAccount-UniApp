@@ -98,6 +98,7 @@
 
 			//获取热门新闻
 			this.getNews()
+			console.log(uni.getStorageSync('loginId'))
 		},
 
 		//导入组件 
@@ -204,7 +205,7 @@
 		width: 40px;
 		height: 100px;
 		z-index: 10;
-		right: 12px;
+		right: 15px;
 		top: 80%;
 		height: 50px;
 		line-height: 50px;
