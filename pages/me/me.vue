@@ -48,7 +48,7 @@
 	export default {
 		data() {
 			return {
-				userId: uni.getStorageSync('loginId'),
+				userId: uni.getStorageSync('userId'),
 				userInfo: {},
 				pic: 'https://uviewui.com/common/logo.png',
 
