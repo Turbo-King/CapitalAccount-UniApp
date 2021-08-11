@@ -1,7 +1,0 @@
-{
-  "enablePullDownRefresh": true,
-  "usingComponents": {
-    "u-toast": "/uview-ui/components/u-toast/u-toast",
-    "goods-list": "/components/goods-list/goods-list"
-  }
-}
