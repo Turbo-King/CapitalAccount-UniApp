@@ -162,7 +162,13 @@
 						money: money
 					});
 				} else if (transferType == 2) {
-					// 转账
+					console.log(this.account);
+					
+					res = await account.transfer({
+						curUserId: userId,
+						transferUsername: this.account,
+						money: money
+					})
 				}
 				
 				if (res.statusCode == 200) {
