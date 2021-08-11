@@ -11,7 +11,7 @@
 		<view class="u-demo-wrap">
 			<view class="u-demo-area">
 				<u-subsection v-if="change" :bold="bold" :active-color="activeColor" :current="current" :mode="mode"
-					:list="['取款', '存款', '转账']" @change="changeBusiness"></u-subsection>
+					:list="['存款', '取款', '转账']" @change="changeBusiness"></u-subsection>
 			</view>
 		</view>
 
@@ -54,6 +54,8 @@
 </template>
 
 <script>
+	import account from '../../api/module/account.js';
+	
 	export default {
 		data() {
 			return {
@@ -64,10 +66,12 @@
 				change: true,
 				//转账显示
 				transferFlag: false,
+				// 交易类型
+				transferType: 0, 
 				account: '',
 				money: 0,
 
-				buttonTitle: '转账',
+				buttonTitle: '存款',
 				//支付显示与密码
 				show: false,
 				password: '',
@@ -81,18 +85,19 @@
 		methods: {
 			//业务状态发生选择
 			changeBusiness(current) {
+				this.transferType = current;
 				if (current === 0) {
-					console.log('取款')
-					this.transferFlag = false
-					this.buttonTitle = '取款'
+					console.log('存款');
+					this.transferFlag = false;
+					this.buttonTitle = '存款';
 				} else if (current === 1) {
-					console.log('存款')
-					this.buttonTitle = '存款'
-					this.transferFlag = false
+					console.log('取款');
+					this.buttonTitle = '取款';
+					this.transferFlag = false;
 				} else if (current === 2) {
-					console.log('转账')
-					this.buttonTitle = '转账'
-					this.transferFlag = true
+					console.log('转账');
+					this.buttonTitle = '转账';
+					this.transferFlag = true;
 				}
 			},
 
@@ -130,19 +135,51 @@
 					this.password = this.password.substring(0, this.password.length - 1);
 				}
 			},
-			pay() {
+			async pay() {
+				this.show = false;
 				uni.showLoading({
 					title: '支付中'
 				})
-
-				setTimeout(() => {
+				
+				const transferType = this.transferType;
+				const money = this.money;
+				const userId = uni.getStorageSync('userId');
+				
+				console.log('交易类型（0-存款1-取款2-转账）: ' + transferType);
+				console.log('money: ' + money);
+				console.log("userId: " + userId);
+				// todo 验证 userId 不为空
+				
+				let res = null;
+				if (transferType == 0) {
+					res = await account.deposit({
+						userId: userId,
+						money: money
+					});
+				} else if (transferType == 1) {
+					res = await account.withdrawal({
+						userId: userId,
+						money: money
+					});
+				} else if (transferType == 2) {
+					// 转账
+				}
+				
+				if (res.statusCode == 200) {
 					uni.hideLoading();
-					this.show = false;
-					uni.showToast({
-						icon: 'success',
-						title: '支付成功'
-					})
-				}, 2000);
+					console.log(res);
+					
+					if (res.data.code == 200) {
+						uni.showToast({
+							title: res.data.msg
+						});
+					} else {
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'error'
+						});
+					}
+				}
 			},
 			showPop(flag = true) {
 				this.password = '';

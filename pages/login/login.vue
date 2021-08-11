@@ -261,7 +261,7 @@
 						uni.showToast({
 							title: '登陆成功'
 						});
-						uni.setStorageSync('loginId',res.data.data)
+						uni.setStorageSync('userId',res.data.data);
 						uni.switchTab({
 							url: '../index/index'
 						});
