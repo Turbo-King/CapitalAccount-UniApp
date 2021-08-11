@@ -3,7 +3,9 @@ import request from '../request.js';
 // 接口
 const Api = {
 	deposit: '/api/account/deposit',
-	withdrawal: '/api/account/withdrawal'
+	withdrawal: '/api/account/withdrawal',
+	transfer: '/api/account/transfer',
+	detail: '/api/account/detail'
 }
 
 // 创建
@@ -25,7 +27,25 @@ const withdrawal = (data) => {
 	})
 }
 
+const transfer = (data) => {
+	return request.request({
+		url: Api.transfer
+			+ '?curUserId=' + data.curUserId
+			+ '&transferUsername=' + data.transferUsername
+			+ '&money=' + data.money,
+		method: 'POST'
+	})
+}
+
+const detail = (data) => {
+	return request.request({
+		url: Api.detail + '?userId=' + data.userId
+	})
+}
+
 export default {
 	deposit,
-	withdrawal
+	withdrawal,
+	transfer,
+	detail
 }

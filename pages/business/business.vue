@@ -14,12 +14,17 @@
 					:list="['存款', '取款', '转账']" @change="changeBusiness"></u-subsection>
 			</view>
 		</view>
+		
+		<view class="u-demo-wrap">
+			余额
+			<view id="balance">{{ this.balance }}</view>
+		</view>
 
 		<!-- 转账 -->
 		<view class="transfer-accounts">
 			<view>
 				<view class="inputWrapper" :class="transferFlag?'show':'hiden'">
-					<input @input="record" id="account" class="input" type="number" value="" placeholder="请输入对方账户" />
+					<input @input="record" id="account" class="input" type="number" value="" placeholder="请输入对方用户名" />
 				</view>
 				<view class="inputWrapper">
 					<input @input="record" id="money" class="input" type="number" value="" placeholder="请输入金额" />
@@ -70,6 +75,7 @@
 				transferType: 0, 
 				account: '',
 				money: 0,
+				balance: 999,
 
 				buttonTitle: '存款',
 				//支付显示与密码
@@ -162,7 +168,13 @@
 						money: money
 					});
 				} else if (transferType == 2) {
-					// 转账
+					console.log(this.account);
+					
+					res = await account.transfer({
+						curUserId: userId,
+						transferUsername: this.account,
+						money: money
+					})
 				}
 				
 				if (res.statusCode == 200) {
@@ -179,6 +191,9 @@
 							icon: 'error'
 						});
 					}
+					
+					// 更新余额
+					this.getBalance();
 				}
 			},
 			showPop(flag = true) {
@@ -200,9 +215,25 @@
 			},
 			finish() {
 				console.log('完成')
+			},
+			// 获取余额
+			async getBalance() {
+				console.log('获取余额');
+				console.log(uni.getStorageSync('userId'));
+				
+				const res = await account.detail({
+					userId: uni.getStorageSync('userId')
+				});
+				console.log(res);
+				
+				if (res != null && res.statusCode == 200 && res.data.code == 200) {
+					this.balance = res.data.data.money;
+				}
 			}
-
-		}
+		},
+		onLoad() {
+			this.getBalance();
+		},
 	}
 </script>
 
