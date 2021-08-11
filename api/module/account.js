@@ -4,7 +4,8 @@ import request from '../request.js';
 const Api = {
 	deposit: '/api/account/deposit',
 	withdrawal: '/api/account/withdrawal',
-	transfer: '/api/account/transfer'
+	transfer: '/api/account/transfer',
+	detail: '/api/account/detail'
 }
 
 // 创建
@@ -36,8 +37,15 @@ const transfer = (data) => {
 	})
 }
 
+const detail = (data) => {
+	return request.request({
+		url: Api.detail + '?userId=' + data.userId
+	})
+}
+
 export default {
 	deposit,
 	withdrawal,
-	transfer
+	transfer,
+	detail
 }
