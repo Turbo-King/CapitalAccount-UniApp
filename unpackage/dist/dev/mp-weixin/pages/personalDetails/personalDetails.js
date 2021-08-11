@@ -104,11 +104,11 @@ try {
     uInput: function() {
       return Promise.all(/*! import() | uview-ui/components/u-input/u-input */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uview-ui/components/u-input/u-input")]).then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-input/u-input.vue */ 223))
     },
-    uButton: function() {
-      return __webpack_require__.e(/*! import() | uview-ui/components/u-button/u-button */ "uview-ui/components/u-button/u-button").then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-button/u-button.vue */ 177))
-    },
     uCheckbox: function() {
       return __webpack_require__.e(/*! import() | uview-ui/components/u-checkbox/u-checkbox */ "uview-ui/components/u-checkbox/u-checkbox").then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-checkbox/u-checkbox.vue */ 230))
+    },
+    uButton: function() {
+      return __webpack_require__.e(/*! import() | uview-ui/components/u-button/u-button */ "uview-ui/components/u-button/u-button").then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-button/u-button.vue */ 177))
     },
     uActionSheet: function() {
       return __webpack_require__.e(/*! import() | uview-ui/components/u-action-sheet/u-action-sheet */ "uview-ui/components/u-action-sheet/u-action-sheet").then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-action-sheet/u-action-sheet.vue */ 237))
@@ -145,10 +145,6 @@ var render = function() {
     _vm.e0 = function($event) {
       _vm.actionSheetShow = true
     }
-
-    _vm.e1 = function($event) {
-      _vm.pickerShow = true
-    }
   }
 }
 var recyclableRender = false
@@ -183,17 +179,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 19));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};} //
 //
 //
 //
@@ -236,11 +222,7 @@ var _default =
         sex: '',
         intro: '',
         agreement: false,
-        region: '',
-        phone: '',
-        code: '',
-        password: '',
-        rePassword: '' },
+        phone: '' },
 
       rules: {
         name: [{
@@ -249,7 +231,7 @@ var _default =
           trigger: 'blur' },
 
         {
-          min: 3,
+          min: 1,
           max: 5,
           message: '姓名长度在3到5个字符',
           trigger: ['change', 'blur'] },
@@ -292,21 +274,16 @@ var _default =
           message: '请填写简介' },
 
         {
-          min: 5,
+          min: 3,
           message: '简介不能少于5个字',
           trigger: 'change' },
 
         // 正则校验示例，此处用正则校验是否中文，此处仅为示例，因为uView有this.$u.test.chinese可以判断是否中文
         {
-          pattern: /^[\u4e00-\u9fa5]+$/gi,
+          // pattern: /^[\u4e00-\u9fa5]+$/gi,
           message: '简介只能为中文',
           trigger: 'change' }],
 
-
-        region: [{
-          required: true,
-          message: '请选择地区',
-          trigger: 'change' }],
 
         phone: [{
           required: true,
@@ -320,42 +297,6 @@ var _default =
           },
           message: '手机号码不正确',
           // 触发器可以同时用blur和change，二者之间用英文逗号隔开
-          trigger: ['change', 'blur'] }],
-
-
-        code: [{
-          required: true,
-          message: '请输入验证码',
-          trigger: ['change', 'blur'] },
-
-        {
-          type: 'number',
-          message: '验证码只能为数字',
-          trigger: ['change', 'blur'] }],
-
-
-        password: [{
-          required: true,
-          message: '请输入密码',
-          trigger: ['change', 'blur'] },
-
-        {
-          // 正则不能含有两边的引号
-          pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]+\S{5,12}$/,
-          message: '需同时含有字母和数字，长度在6-12之间',
-          trigger: ['change', 'blur'] }],
-
-
-        rePassword: [{
-          required: true,
-          message: '请重新输入密码',
-          trigger: ['change', 'blur'] },
-
-        {
-          validator: function validator(rule, value, callback) {
-            return value === _this.model.password;
-          },
-          message: '两次输入的密码不相等',
           trigger: ['change', 'blur'] }] },
 
 
@@ -380,7 +321,7 @@ var _default =
 
   },
   onLoad: function onLoad() {
-
+    this.getUserInfo();
   },
   computed: {
     borderCurrent: function borderCurrent() {
@@ -395,9 +336,21 @@ var _default =
       this.$refs.uForm.validate(function (valid) {
         if (valid) {
           if (!_this2.model.agreement) return _this2.$u.toast('请勾选协议');
-          console.log('验证通过');
+          uni.showToast({
+            title: '修改成功',
+            icon: 'success' });
+
+          setTimeout(function () {
+            uni.switchTab({
+              url: '../index/index' });
+
+          }, 1500);
+
         } else {
-          console.log('验证失败');
+          uni.showToast({
+            title: '修改失败',
+            icon: 'error' });
+
         }
       });
     },
@@ -414,40 +367,34 @@ var _default =
     checkboxChange: function checkboxChange(e) {
       this.model.agreement = e.value;
     },
-    // 选择地区回调
-    regionConfirm: function regionConfirm(e) {
-      this.model.region = e.province.label + '-' + e.city.label + '-' + e.area.label;
-    },
     borderChange: function borderChange(index) {
       this.border = !index;
     },
     codeChange: function codeChange(text) {
       this.codeTips = text;
     },
-    // 获取验证码
-    getCode: function getCode() {var _this3 = this;
-      if (this.$refs.uCode.canGetCode) {
-        // 模拟向后端请求验证码
-        uni.showLoading({
-          title: '正在获取验证码',
-          mask: true });
-
-        setTimeout(function () {
-          uni.hideLoading();
-          // 这里此提示会被this.start()方法中的提示覆盖
-          _this3.$u.toast('验证码已发送');
-          // 通知验证码组件内部开始倒计时
-          _this3.$refs.uCode.start();
-        }, 2000);
-      } else {
-        this.$u.toast('倒计时结束后再发送');
-      }
-    },
     errorChange: function errorChange(index) {
       if (index == 0) this.errorType = ['message'];
       if (index == 1) this.errorType = ['toast'];
       if (index == 2) this.errorType = ['border-bottom'];
       if (index == 3) this.errorType = ['border'];
+    },
+
+    // 获取用户信息
+    getUserInfo: function getUserInfo() {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
+                  _this3.$myRequest({
+                    url: 'http://localhost:9999/api/capital/user/info',
+                    data: {
+                      id: uni.getStorageSync('loginId') } }));case 2:res = _context.sent;
+
+
+                // console.log(res)
+
+                _this3.model.name = res.data.data.realName;
+                _this3.model.sex = res.data.data.sex == '0' ? '男' : '女';
+                _this3.model.intro = res.data.data.remark;
+                _this3.model.agreement = false;
+                _this3.model.phone = res.data.data.phone;case 8:case "end":return _context.stop();}}}, _callee);}))();
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

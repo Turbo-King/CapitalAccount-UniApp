@@ -219,6 +219,13 @@ var _request = _interopRequireDefault(__webpack_require__(/*! ../../api/request.
 
   },
 
+  onShow: function onShow() {
+    if (uni.getStorageSync('loginId') !== '')
+    uni.switchTab({
+      url: '../index/index' });
+
+  },
+
   methods: {
     refreshCaptcha: function refreshCaptcha() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
                 console.log('刷新验证码');
@@ -238,6 +245,9 @@ var _request = _interopRequireDefault(__webpack_require__(/*! ../../api/request.
         setTimeout(function () {
           _this2.forgetPasswordFlag = false;
         }, 300);
+        this.type = 'warning';
+        this.title = '该功能还没有开放哦！';
+        this.showTips();
       } else if (flag === 1) {
         this.telephoneLoginFlag = true;
 
@@ -401,7 +411,7 @@ var _request = _interopRequireDefault(__webpack_require__(/*! ../../api/request.
 
                 if (res.statusCode == 200) {
                   uni.hideLoading();
-                  console.log(res);
+                  // console.log(res);
                   if (res.data.code == 200) {
                     uni.showToast({
                       title: '登陆成功' });

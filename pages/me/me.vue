@@ -15,8 +15,8 @@
 				<u-avatar :src="pic" size="140"></u-avatar>
 			</view>
 			<view class="u-flex-1">
-				<view class="u-font-18 u-p-b-20">魏志豪</view>
-				<view class="u-font-14 u-tips-color">账号:weizhihao</view>
+				<view class="u-font-18 u-p-b-20">{{userInfo.realName}}</view>
+				<view class="u-font-14 u-tips-color">账号:{{userInfo.username}}</view>
 			</view>
 		</view>
 
@@ -43,9 +43,13 @@
 </template>
 
 <script>
+	import user from '../../api/module/user.js'
+
 	export default {
 		data() {
 			return {
+				userId: uni.getStorageSync('loginId'),
+				userInfo: {},
 				pic: 'https://uviewui.com/common/logo.png',
 
 				// 消息提示
@@ -62,7 +66,7 @@
 			}
 		},
 		onLoad() {
-
+			this.getUserInfo()
 		},
 		methods: {
 			// 个人信息详细信息
@@ -93,16 +97,31 @@
 			},
 
 			// 弹出提示
-			confirm() {
+			async confirm() {
 				setTimeout(() => {
 					this.show = false;
 				}, 1000)
 				this.show()
+				//清空登陆信息
+				uni.clearStorageSync()
+				const res = await user.logout;
+
 				setTimeout(() => {
 					uni.navigateTo({
 						url: '../login/login'
 					})
 				}, 1000)
+			},
+
+			// 获取用户信息
+			async getUserInfo() {
+				const res = await this.$myRequest({
+					url: 'http://localhost:9999/api/capital/user/info',
+					data: {
+						id: this.userId
+					}
+				})
+				this.userInfo = res.data.data
 			}
 
 		}

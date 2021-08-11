@@ -63,6 +63,13 @@
 				captchaImage: 'http://localhost:9999/system/captcha/generate'
 			}
 		},
+		
+		onShow() {
+			if(uni.getStorageSync('loginId')!=='')
+			uni.switchTab({
+				url:'../index/index'
+			})
+		},
 
 		methods: {
 			async refreshCaptcha() {
@@ -83,6 +90,9 @@
 					setTimeout(() => {
 						this.forgetPasswordFlag = false;
 					}, 300);
+					this.type='warning'
+					this.title = '该功能还没有开放哦！'
+					this.showTips()
 				} else if (flag === 1) {
 					this.telephoneLoginFlag = true;
 
@@ -246,7 +256,7 @@
 
 				if (res.statusCode == 200) {
 					uni.hideLoading();
-					console.log(res);
+					// console.log(res);
 					if (res.data.code == 200) {
 						uni.showToast({
 							title: '登陆成功'

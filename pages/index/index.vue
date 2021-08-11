@@ -98,7 +98,7 @@
 
 			//获取热门新闻
 			this.getNews()
-			console.log(uni.getStorageSync('loginId'))
+			// console.log(uni.getStorageSync('loginId'))
 		},
 
 		//导入组件 
