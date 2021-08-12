@@ -25,7 +25,7 @@
 			//获取资讯详情
 			async getNewDetail() {
 				const res = await this.$myRequest({
-					url: 'http://localhost:9999/api/capital/news/details?id=' + this.id
+					url: '/api/capital/news/details?id=' + this.id
 				})
 				// console.log(res)
 				this.detail = res.data.data

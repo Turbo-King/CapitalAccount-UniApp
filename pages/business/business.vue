@@ -14,17 +14,19 @@
 					:list="['存款', '取款', '转账']" @change="changeBusiness"></u-subsection>
 			</view>
 		</view>
-		
-		<view class="u-demo-wrap">
-			余额
-			<view id="balance">{{ this.balance }}</view>
+
+		<view class="balance-view">
+			<view id="balance">余额：{{ balance }}</view>
 		</view>
 
 		<!-- 转账 -->
 		<view class="transfer-accounts">
 			<view>
 				<view class="inputWrapper" :class="transferFlag?'show':'hiden'">
-					<input @input="record" id="account" class="input" type="number" value="" placeholder="请输入对方用户名" />
+					<input @input="record" id="account" class="input" type="number" value="" placeholder="请输入对方账户" />
+				</view>
+				<view class="inputWrapper" :class="transferFlag?'show':'hiden'">
+					<input @input="record" id="username" class="input" type="text" value="" placeholder="请输入对方用户名" />
 				</view>
 				<view class="inputWrapper">
 					<input @input="record" id="money" class="input" type="number" value="" placeholder="请输入金额" />
@@ -60,7 +62,7 @@
 
 <script>
 	import account from '../../api/module/account.js';
-	
+
 	export default {
 		data() {
 			return {
@@ -72,8 +74,9 @@
 				//转账显示
 				transferFlag: false,
 				// 交易类型
-				transferType: 0, 
+				transferType: 0,
 				account: '',
+				username: '',
 				money: 0,
 				balance: 999,
 
@@ -93,15 +96,15 @@
 			changeBusiness(current) {
 				this.transferType = current;
 				if (current === 0) {
-					console.log('存款');
+					// console.log('存款');
 					this.transferFlag = false;
 					this.buttonTitle = '存款';
 				} else if (current === 1) {
-					console.log('取款');
+					// console.log('取款');
 					this.buttonTitle = '取款';
 					this.transferFlag = false;
 				} else if (current === 2) {
-					console.log('转账');
+					// console.log('转账');
 					this.buttonTitle = '转账';
 					this.transferFlag = true;
 				}
@@ -110,10 +113,12 @@
 			//捕获用户名与密码
 			record(e) {
 				// console.log(e.currentTarget.id)
-				if (e.currentTarget.id === 'account') {
-					this.account = e.detail.value
+				if (e.currentTarget.id === 'username') {
+					this.username = e.detail.value
 				} else if (e.currentTarget.id === 'money') {
 					this.money = e.detail.value
+				}else if (e.currentTarget.id === 'account') {
+					this.account = e.detail.value
 				}
 			},
 
@@ -146,16 +151,16 @@
 				uni.showLoading({
 					title: '支付中'
 				})
-				
+
 				const transferType = this.transferType;
 				const money = this.money;
 				const userId = uni.getStorageSync('userId');
-				
+
 				console.log('交易类型（0-存款1-取款2-转账）: ' + transferType);
 				console.log('money: ' + money);
 				console.log("userId: " + userId);
 				// todo 验证 userId 不为空
-				
+
 				let res = null;
 				if (transferType == 0) {
 					res = await account.deposit({
@@ -168,19 +173,20 @@
 						money: money
 					});
 				} else if (transferType == 2) {
-					console.log(this.account);
-					
+					// console.log(this.account);
+
 					res = await account.transfer({
 						curUserId: userId,
-						transferUsername: this.account,
+						transferUsername: this.username,
+						account: this.account,
 						money: money
 					})
 				}
-				
+
 				if (res.statusCode == 200) {
 					uni.hideLoading();
 					console.log(res);
-					
+
 					if (res.data.code == 200) {
 						uni.showToast({
 							title: res.data.msg
@@ -191,7 +197,7 @@
 							icon: 'error'
 						});
 					}
-					
+
 					// 更新余额
 					this.getBalance();
 				}
@@ -218,14 +224,14 @@
 			},
 			// 获取余额
 			async getBalance() {
-				console.log('获取余额');
-				console.log(uni.getStorageSync('userId'));
-				
+				// console.log('获取余额');
+				// console.log(uni.getStorageSync('userId'));
+
 				const res = await account.detail({
 					userId: uni.getStorageSync('userId')
 				});
 				console.log(res);
-				
+
 				if (res != null && res.statusCode == 200 && res.data.code == 200) {
 					this.balance = res.data.data.money;
 				}
@@ -238,6 +244,12 @@
 </script>
 
 <style lang="scss" scoped>
+	.balance-view {
+		text-align: center;
+		font-size: 15px;
+		margin-top: 20px;
+	}
+
 	.u-demo {
 		width: 100vw;
 		height: 100vh;

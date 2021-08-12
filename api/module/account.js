@@ -31,6 +31,7 @@ const transfer = (data) => {
 	return request.request({
 		url: Api.transfer
 			+ '?curUserId=' + data.curUserId
+			+ '&account=' + data.account
 			+ '&transferUsername=' + data.transferUsername
 			+ '&money=' + data.money,
 		method: 'POST'

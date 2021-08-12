@@ -10,10 +10,17 @@ import {
 	myRequest
 } from './util/api.js'
 
+// 引入news请求
+import {
+	newsRequest
+} from './util/newsApi.js'
+
 //封装请求
 Vue.config.productionTip = false
 
 Vue.prototype.$myRequest = myRequest
+
+Vue.prototype.$newsRequest = newsRequest
 
 // 时间格式化
 Vue.filter('formatDate', (date) => {

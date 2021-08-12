@@ -1,9 +1,9 @@
-// const BASE_URL = 'https://api-hmugo-web.itheima.net'
+const BASE_URL = 'http://121.89.219.21:1010'
+// const BASE_URL = 'http://127.0.0.1:1010'
 export const myRequest = (options) => {
 	return new Promise((resolve, reject) => {
 		uni.request({
-			// url: BASE_URL + options.url,
-			url: options.url,
+			url: BASE_URL + options.url,
 			method: options.method || 'GET',
 			data: options.data || {},
 			success: (res) => {

@@ -126,7 +126,7 @@
 
 			// 获取热门新闻
 			async getNews(callBack) {
-				const res = await this.$myRequest({
+				const res = await this.$newsRequest({
 					url: 'https://api.apiopen.top/getWangYiNews?page=' + this.pageInde
 				})
 				// console.log(res)

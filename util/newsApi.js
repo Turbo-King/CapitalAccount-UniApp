@@ -1,14 +1,9 @@
-const BASE_URL = 'http://121.89.219.21:1010';
-// const BASE_URL = 'http://127.0.0.1:1010';
-const request = (options) => {
+export const newsRequest = (options) => {
 	return new Promise((resolve, reject) => {
 		uni.request({
-			url: BASE_URL + options.url,
+			url:  options.url,
 			method: options.method || 'GET',
 			data: options.data || {},
-			header: {
-				'content-type': 'application/x-www-form-urlencoded',
-			},
 			success: (res) => {
 				if (res.statusCode !== 200) {
 					return uni.showToast({
@@ -22,11 +17,11 @@ const request = (options) => {
 					title: "网络异常,请稍后重试！"
 				})
 				reject(err)
+
 			}
 		})
-	});
+	})
 }
-
-export default {
-	request
-}
+// export default {
+// 	myRequest
+// }

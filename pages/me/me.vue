@@ -23,7 +23,7 @@
 
 		<view class="u-m-t-20">
 			<u-cell-group>
-				<u-cell-item icon="rmb-circle" title="个人账户"></u-cell-item>
+				<u-cell-item icon="rmb-circle" @click='business' title="个人账户"></u-cell-item>
 			</u-cell-group>
 		</view>
 
@@ -65,7 +65,8 @@
 				showTitle: true,
 			}
 		},
-		onLoad() {
+		onShow() {
+			this.userId = uni.getStorageSync('userId')
 			this.getUserInfo()
 		},
 		methods: {
@@ -81,6 +82,13 @@
 			// 切换账号
 			logout() {
 				this.tipShow = true
+			},
+
+			// 个人账户
+			business() {
+				uni.switchTab({
+					url: '../business/business'
+				})
 			},
 
 			// 消息提示
@@ -104,8 +112,10 @@
 				this.show()
 				//清空登陆信息
 				uni.clearStorageSync()
-				const res = await user.logout;
+				this.userInfo = {}
+				this.userId = ''
 
+				const res = await user.logout;
 				setTimeout(() => {
 					uni.navigateTo({
 						url: '../login/login'
@@ -116,7 +126,7 @@
 			// 获取用户信息
 			async getUserInfo() {
 				const res = await this.$myRequest({
-					url: 'http://localhost:9999/api/capital/user/info',
+					url: '/api/capital/user/info',
 					data: {
 						id: this.userId
 					}

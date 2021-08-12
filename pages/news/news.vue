@@ -16,7 +16,7 @@
 			//获取新闻资讯
 			async getNews() {
 				const res = await this.$myRequest({
-					url: 'http://127.0.0.1:9999/api/capital/news/list'
+					url: '/api/capital/news/list'
 				})
 				// console.log(res)
 				this.newsList = res.data.data
@@ -35,7 +35,7 @@
 			"news-item": newsItem
 		},
 
-		onLoad() {
+		onShow() {
 			this.getNews()
 		}
 	}

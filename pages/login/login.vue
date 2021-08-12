@@ -65,7 +65,7 @@
 		},
 		
 		onShow() {
-			if(uni.getStorageSync('loginId')!=='')
+			if(uni.getStorageSync('userId')!=='')
 			uni.switchTab({
 				url:'../index/index'
 			})
@@ -78,7 +78,7 @@
 				// console.log(request)
 				// this.captchaKey = result.data.data.key;
 				// this.captchaCode = result.data.data.code;
-				this.captchaImage = 'http://localhost:9999/system/captcha/generate'
+				this.captchaImage = 'http://121.89.219.21:1010/system/captcha/generate'
 
 			},
 

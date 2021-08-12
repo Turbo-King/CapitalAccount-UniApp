@@ -202,9 +202,9 @@
 			// 获取用户信息
 			async getUserInfo() {
 				const res = await this.$myRequest({
-					url: 'http://localhost:9999/api/capital/user/info',
+					url: '/api/capital/user/info',
 					data: {
-						id: uni.getStorageSync('loginId')
+						id: uni.getStorageSync('userId')
 					}
 				})
 				// console.log(res)
