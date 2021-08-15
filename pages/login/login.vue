@@ -57,18 +57,18 @@
 				title: '请检查输入是否正确',
 				type: 'warning',
 
-				username: 'admin',
-				password: 'admin',
+				username: '',
+				password: '',
 				captchaCode: '',
 				captchaImage: 'http://localhost:9999/system/captcha/generate'
 			}
 		},
-		
+
 		onShow() {
-			if(uni.getStorageSync('userId')!=='')
-			uni.switchTab({
-				url:'../index/index'
-			})
+			if (uni.getStorageSync('userId') !== '')
+				uni.switchTab({
+					url: '../index/index'
+				})
 		},
 
 		methods: {
@@ -90,7 +90,7 @@
 					setTimeout(() => {
 						this.forgetPasswordFlag = false;
 					}, 300);
-					this.type='warning'
+					this.type = 'warning'
 					this.title = '该功能还没有开放哦！'
 					this.showTips()
 				} else if (flag === 1) {
@@ -154,27 +154,51 @@
 						},
 						success(res) { // 登录成功
 							console.log(res.authResult); // {openid:'登录授权唯一标识',access_token:'接口返回的 token'}
-							uni.closeAuthView()
+							// uni.closeAuthView()
 
 							// 在得到access_token后，通过callfunction调用云函数
-							// uniCloud.callFunction({
-							// 	name: 'uni-login', // 你的云函数名称
-							// 	data: {
-							// 		'access_token': res.authResult.access_token, // 客户端一键登录接口返回的access_token
-							// 		'openid': res.authResult.openid // 客户端一键登录接口返回的openid
-							// 	}
-							// }).then(res => {
-							// 	res.result = {
-							// 	  code: code,
-							// 	  message: message
-							// 	}
-							// 	登录成功，可以关闭一键登录授权界面了
-							// 	uni.closeAuthView()
-							// }).catch(err => {
-							// 	// 处理错误
-							// 	this.title = '网络出现问题，请稍后再试'
-							// 	this.showTips
-							// })
+							uniCloud.callFunction({
+								name: 'uni-login', // 你的云函数名称
+								data: {
+									'access_token': res.authResult
+										.access_token, // 客户端一键登录接口返回的access_token
+									'openid': res.authResult.openid // 客户端一键登录接口返回的openid
+								}
+							}).then(res => {
+								console.log(res)
+								if (res.result.code == 200) {
+									// 登录成功，可以关闭一键登录授权界面了
+									uni.closeAuthView()
+
+									setTimeout(() => {
+										// console.log('执行打印')
+										// this.title = '手机号注册成功,手机号为：' + res.result.data
+										// this.type = 'success'
+										// this.showTips
+										uni.showToast({
+											title: '手机号注册成功,手机号为：' + res.result.data,
+											icon:'none'
+										});
+									}, 1000)
+
+
+
+								}
+
+								res.result = {
+									code: code,
+									message: message,
+									data: data,
+
+								}
+
+
+							}).catch(err => {
+								// 处理错误
+								this.title = '网络出现问题，请稍后再试'
+								this.showTips
+							})
+
 
 						},
 						fail(res) { // 登录失败
@@ -216,11 +240,11 @@
 			async login() {
 				//登陆按钮点击样式
 				this.loginFlag = true;
-				// setTimeout(() => {
-				// 	this.loginFlag = false;
-				// 	uni.switchTab({
-				// 		url: '../index/index'
-				// 	})
+				setTimeout(() => {
+					this.loginFlag = false;
+					// uni.switchTab({
+					// 	url: '../index/index'
+				}, 1000)
 
 				// 	//验证账号密码
 				// 	// const res = await this.$myRequest({
@@ -261,7 +285,7 @@
 						uni.showToast({
 							title: '登陆成功'
 						});
-						uni.setStorageSync('userId',res.data.data);
+						uni.setStorageSync('userId', res.data.data);
 						uni.switchTab({
 							url: '../index/index'
 						});
